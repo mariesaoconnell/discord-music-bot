@@ -3,24 +3,21 @@ require('dotenv').config();
 
 // IMPORT LIBRARIES
 const { REST } = require("@discordjs/rest");
-const { Routes } = require('discord-api-types');
-const { Client, Intents, Collection } = require('discord.js');
+const { Routes } = require('discord-api-types/v9');
+const { Client, IntentsBitField, Collection } = require('discord.js');
 const { Player } = require('discord-player');
 
 // RESPONSIBLE FOR LOADING COMMANDS FROM COMMAND CENTER
 const fs = require('node:fs');
 const path = require('node:path');
 
-// CREATE CLIENT
-const client = new Client({
+// INTENTS
+const myIntents = new IntentsBitField();
+myIntents.add(IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages, IntentsBitField.Flags.GuildVoiceStates)
 
-  // GIVE INTENTS THAT THE BOT WILL BE USING
-  intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILDS_MESSAGES,
-    Intents.FLAGS.GUILDS_VOICE_STATES,
-  ]
-});
+
+// CREATE CLIENT AND SET INTENTS
+const client = new Client({ intents: myIntents});
 
 // LOAD ALL THE COMMANDS
 const commands = [];
@@ -38,13 +35,7 @@ for(const file of commandFiles){
 }
 
 // CREATE PLAYER
-client.player = new Player(client, {
-  ytdlOptions: {
-    quality: "highestaudio",
-    highWaterMark: 1 << 25
-  }
-});
-
+client.player = new Player(client);
 
 // REGISTER COMMANDS
 client.on("ready", () => {
@@ -60,7 +51,6 @@ client.on("ready", () => {
     .catch(console.error);
   }
 })
-
 
 // EXECUTE COMMANDS WHEN USER TYPES IN
 client.on("interactionCreate", async interaction => {
