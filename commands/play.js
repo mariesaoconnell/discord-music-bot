@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { Message } = require('discord.js');
 const { QueryType } = require('discord-player');
 
 module.exports = {
@@ -11,11 +11,11 @@ module.exports = {
 
 		// SEARCH SUBCOMMAND
 		.addSubcommand((subcommand) => {
-			subcommand
+			return subcommand
 				.setName('search')
 				.setDescription('Searches for a song.')
 				.addStringOption((option) => {
-					option
+					return option
 						.setName('searchterms')
 						.setDescription('search keywords.')
 						.setRequired(true);
@@ -24,11 +24,11 @@ module.exports = {
 
 		// PLAYLIST SUBCOMMAND
 		.addSubcommand((subcommand) => {
-			subcommand
+			return subcommand
 				.setName('playlist')
 				.setDescription('Plays playlist from YT.')
 				.addStringOption((option) => {
-					option
+					return option
 						.setName('url')
 						.setDescription('Playlist URL')
 						.setRequired(true);
@@ -37,11 +37,11 @@ module.exports = {
 
 		// SONG SUBCOMMAND
 		.addSubcommand((subcommand) => {
-			subcommand
+			return subcommand
 				.setName('song')
 				.setDescription('Plays song from YT')
 				.addStringOption((option) => {
-					option
+					return option
 						.setName('url')
 						.setDescription('url of the song')
 						.setRequired(true);
@@ -64,7 +64,7 @@ module.exports = {
 			await queue.connect(interaction.member.voice.channel);
 
 		// CREATE EMBED MESSAGE
-		let embed = new MessageEmbed();
+		let embed = new Message();
 
 		// CHECK SUBCOMMAND
 

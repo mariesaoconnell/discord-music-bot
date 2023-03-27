@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { Message } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -19,7 +19,7 @@ module.exports = {
 
     await interaction.reply({
       embeds: [
-        new MessageEmbed()
+        new Message()
           .setDescription(`Skipped **${currentSong.title}**`)
           .setThumbnail(currentSong.thumbnail)
       ]

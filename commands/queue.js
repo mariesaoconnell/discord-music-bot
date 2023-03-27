@@ -1,9 +1,9 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { Message } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('skip')
+    .setName('queue')
     .setDescription('Shows the first 10 songs in the queue'),
   execute: async ({client, interaction}) => {
     const queue = client.player.getQueue(interaction.guild);
@@ -23,7 +23,7 @@ module.exports = {
     // MESSAGE RETURNED WITH QUEUE STRING
     await interaction.reply({
       embeds: [
-        new MessageEmbed()
+        new Message()
           .setDescription(`**Currently Playing:**\n\` ${currentSong.title} - <@${currentSong.requestedBy.id}>\n\n**Queue:**\n${queueString}`)
           .setThumbnail(currentSong.thumbnail)
       ]
